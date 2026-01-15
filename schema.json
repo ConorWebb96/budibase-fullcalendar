@@ -126,14 +126,24 @@
             "type": "select",
             "key": "language",
             "options": [
-              "pt",
               "en",
-              "fr",
+              "pt",
               "es",
-              "ru"
+              "ru",
+              "fr",
+              "de",
+              "it",
+              "nl",
+              "zh-CN",
+              "ar",
+              "ja",
+              "ko",
+              "sv",
+              "no",
+              "hi"
             ],
             "label": "language",
-            "defaultValue": "pt"
+            "defaultValue": "en"
           },
           {
             "type": "event",
