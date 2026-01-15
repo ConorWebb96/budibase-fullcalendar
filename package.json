@@ -7,7 +7,7 @@
   "module": "dist/plugin.min.js",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
-    "watch": "rollup -cw rollup.config.mjs"
+    "watch": "rollup -c rollup.config.mjs --watch"
   },
   "dependencies": {
     "@crownframework/svelte-error-boundary": "^1.0.3",
