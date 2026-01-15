@@ -2,7 +2,7 @@
   
   import { getContext } from "svelte"	
   import '@fullcalendar/core/locales-all'
-  import FullCalendar from 'svelte-fullcalendar';
+  import FullCalendar from './FullCalendarWrapper.svelte'
   import daygridPlugin from '@fullcalendar/daygrid';
   import timeGridPlugin from '@fullcalendar/timegrid';
   import listPlugin from '@fullcalendar/list';
