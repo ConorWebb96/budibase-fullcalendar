@@ -20,22 +20,22 @@
             "required": true
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingTitle",
             "label": "Title Mapping"
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingDate",
             "label": "Date Mapping"
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingStart",
             "label": "Start Mapping"
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingEnd",
             "label": "End Mapping"
           },
@@ -63,22 +63,22 @@
             "required": false
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingTitle2",
             "label": "Title Mapping"
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingDate2",
             "label": "Date Mapping"
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingStart2",
             "label": "Start Mapping"
           },
           {
-            "type": "text",
+            "type": "field",
             "key": "mappingEnd2",
             "label": "End Mapping"
           },
