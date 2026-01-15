@@ -6,7 +6,6 @@
   import daygridPlugin from '@fullcalendar/daygrid';
   import timeGridPlugin from '@fullcalendar/timegrid';
   import listPlugin from '@fullcalendar/list';
-  import { onMount } from "svelte";
   import {langs, codeLang} from "./lang"
  
   export let language
@@ -35,48 +34,70 @@
   export let headerOptionsCenter
   export let headerOptionsEnd
 
-  let eventsList = []
-  onMount(()=>{
-    
-    if(eventsList.length > 0){
-      eventsList = []
-    }
-    if(dataProvider.rows){
-      dataProvider.rows.forEach(event => {
-        let eventColor = mappingColor ?? '#313131'           
-        eventsList.push({ title: event[mappingTitle], date: event[mappingDate], start: event[mappingStart], end: event[mappingEnd], color: eventColor, event: event, allDay: allday   })        
-      });
-    }
-    if(dataProvider2.rows){
-      dataProvider2.rows.forEach(event => {
-        let eventColor2 = mappingColor2 ?? '#eb4034' 
-        eventsList.push({ title: event[mappingTitle2], date: event[mappingDate2], start: event[mappingStart2], end: event[mappingEnd2], color: eventColor2, event: event, allDay: allday2  })
-      });
-    }
-    eventsList = eventsList
+  const DEFAULT_COLOR = '#313131'
+  const DEFAULT_COLOR_SECONDARY = '#eb4034'
+
+  const normalizeEvent = (row, titleKey, dateKey, startKey, endKey, color, allDay) => ({
+    title: titleKey ? row?.[titleKey] : undefined,
+    date: dateKey ? row?.[dateKey] : undefined,
+    start: startKey ? row?.[startKey] : undefined,
+    end: endKey ? row?.[endKey] : undefined,
+    color,
+    event: row,
+    allDay: allDay ?? false
   })
 
-  let options  = {
+  const buildEvents = (rows, titleKey, dateKey, startKey, endKey, color, allDay) => {
+    if (!Array.isArray(rows)) {
+      return []
+    }
+
+    return rows.map(row => normalizeEvent(row, titleKey, dateKey, startKey, endKey, color, allDay))
+  }
+
+  $: eventsList = [
+    ...buildEvents(
+      dataProvider?.rows,
+      mappingTitle,
+      mappingDate,
+      mappingStart,
+      mappingEnd,
+      mappingColor ?? DEFAULT_COLOR,
+      allday
+    ),
+    ...buildEvents(
+      dataProvider2?.rows,
+      mappingTitle2,
+      mappingDate2,
+      mappingStart2,
+      mappingEnd2,
+      mappingColor2 ?? DEFAULT_COLOR_SECONDARY,
+      allday2
+    )
+  ]
+
+  $: localeConfigIndex = codeLang(language)
+  $: localeOverrides = localeConfigIndex === null ? {} : langs[localeConfigIndex]
+
+  $: options = {
     headerToolbar: {
       start: headerOptionsStart,
       center: headerOptionsCenter,
       end: headerOptionsEnd
     },
     plugins: [daygridPlugin, listPlugin, timeGridPlugin],
-    initialDate:  Date.now(),
+    initialDate: Date.now(),
     locale: language,
     dayMaxEvents: true,
     eventClick: (event)=>{
-      calendarEvent({
+      calendarEvent?.({
         value: event.event
       })
-      console.log(JSON.parse(text))
-      console.log(event.event.title)
     },
-    events:eventsList,
+    events: eventsList,
     eventColor: '#378006',
     theme: true,
-    ...langs[codeLang(language)]
+    ...localeOverrides
   }
   const { styleable } = getContext("sdk") 
   const component = getContext("component")
